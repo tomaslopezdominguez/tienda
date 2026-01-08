@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // El orden es importante:
+        // 1. Roles (para que existan en la BD)
+        // 2. Usuarios (para que puedan ser asociados a un Rol)
+        $this->call([
+            RoleSeeder::class,       // Crea los roles 'admin' y 'user'
+            // Ahora llama a UserSeeder.php, que contiene la lógica para crear y asignar roles.
+            UserSeeder::class, 
         ]);
     }
 }
