@@ -6,7 +6,6 @@
     <title>@yield('title', 'Mi Tienda Online')</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
@@ -16,46 +15,18 @@
             --admin-color: #dc3545;
         }
         body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #334155; }
-        
-        /* Navbar Styles */
         .navbar { box-shadow: 0 2px 15px rgba(0,0,0,0.05); border-bottom: 1px solid #e2e8f0; }
         .nav-link { font-weight: 500; color: #64748b !important; transition: all 0.2s; }
         .nav-link:hover { color: var(--primary-color) !important; }
-        
-        /* Logo Styles */
-        .logo-container {
-            width: 45px;
-            height: 45px;
-            overflow: hidden;
-            border-radius: 50%;
-            border: 2px solid var(--primary-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #fff;
-        }
+        .logo-container { width: 45px; height: 45px; overflow: hidden; border-radius: 50%; border: 2px solid var(--primary-color); display: flex; align-items: center; justify-content: center; background-color: #fff; }
         .logo-img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Admin specific link */
         .nav-admin { color: var(--admin-color) !important; font-weight: 700 !important; }
         .nav-admin:hover { opacity: 0.8; }
-
-        /* Buttons & Cards */
         .btn-primary { background-color: var(--primary-color); border: none; padding: 0.6rem 1.2rem; font-weight: 600; border-radius: 8px; transition: all 0.3s; }
         .btn-primary:hover { background-color: #1d4ed8; transform: translateY(-1px); }
         .card { border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        
-        /* Cart Badge */
         .badge-cart { position: absolute; top: -5px; right: -5px; font-size: 0.7rem; border: 2px solid white; }
-
-        /* Dropdowns corregido */
-        .dropdown-menu { 
-            border-radius: 12px; 
-            padding: 0.5rem; 
-            margin-top: 10px; 
-            border: none; 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
-        }
+        .dropdown-menu { border-radius: 12px; padding: 0.5rem; margin-top: 10px; border: none; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         .dropdown-item { border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.9rem; }
     </style>
     @yield('styles')
@@ -81,7 +52,6 @@
                         <li class="nav-item"><a class="nav-link mx-2" href="{{ route('categorias.index') }}">Categorías</a></li>
                         <li class="nav-item"><a class="nav-link mx-2" href="{{ route('productos.index') }}">Productos</a></li>
 
-                        {{-- SECCIÓN ADMIN --}}
                         @auth
                             @if(auth()->user()->hasRole('admin'))
                                 <li class="nav-item dropdown ms-lg-3">
@@ -120,9 +90,7 @@
                                     <i class="fa-regular fa-user-circle me-1 fs-5"></i> {{ auth()->user()->name }}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0">
-                                    {{-- Se usa orders.my para evitar el error de ruta no definida --}}
                                     <li><a class="dropdown-item" href="{{ route('orders.my') }}"><i class="fa-solid fa-box me-2 text-muted"></i>Mis Compras</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('orders.my') }}"><i class="fa-solid fa-user me-2 text-muted"></i>Mi Perfil</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="POST">
@@ -151,11 +119,6 @@
 
     <footer class="bg-white py-5 border-top mt-auto">
         <div class="container text-center text-muted">
-            <div class="mb-3">
-                <a href="#" class="text-decoration-none text-muted mx-2">Términos</a>
-                <a href="#" class="text-decoration-none text-muted mx-2">Privacidad</a>
-                <a href="#" class="text-decoration-none text-muted mx-2">Contacto</a>
-            </div>
             <p class="mb-0 small fw-medium">&copy; {{ date('Y') }} Mi Tienda Online. Hecho con <i class="fa-solid fa-heart text-danger"></i> para el mundo.</p>
         </div>
     </footer>

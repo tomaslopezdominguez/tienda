@@ -5,7 +5,6 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
                 <h1 class="h3 fw-bold mb-1 text-dark">Inventario de Productos</h1>
@@ -51,11 +50,17 @@
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="bg-light rounded p-1 me-3 border" style="width: 45px; height: 45px;">
-                                                <img src="{{ $producto->imagen ? asset('storage/' . $producto->imagen) : '/img/no-image.jpg' }}" 
-                                                     class="img-fluid rounded shadow-xs" 
-                                                     style="object-fit: cover; width: 100%; height: 100%;"
-                                                     alt="{{ $producto->nombre }}">
+                                            <div class="bg-light rounded p-1 me-3 border" style="width: 50px; height: 50px; overflow: hidden;">
+                                                @if($producto->imagen)
+                                                    <img src="{{ asset('storage/' . trim($producto->imagen, '/')) }}" 
+                                                         class="img-fluid rounded shadow-xs" 
+                                                         style="object-fit: cover; width: 100%; height: 100%;"
+                                                         alt="{{ $producto->nombre }}">
+                                                @else
+                                                    <img src="{{ asset('img/no-image.jpg') }}" 
+                                                         class="img-fluid rounded opacity-50" 
+                                                         style="object-fit: cover; width: 100%; height: 100%;">
+                                                @endif
                                             </div>
                                             <div>
                                                 <span class="fw-bold d-block text-dark">{{ $producto->nombre }}</span>
@@ -75,7 +80,7 @@
                                     </td>
                                     <td class="text-center">
                                         @if($producto->stock <= 5)
-                                            <span class="badge bg-danger px-3 py-2 rounded-pill shadow-sm" title="Stock Crítico">
+                                            <span class="badge bg-danger px-3 py-2 rounded-pill shadow-sm">
                                                 <i class="fa-solid fa-triangle-exclamation me-1"></i> {{ $producto->stock }}
                                             </span>
                                         @else
@@ -92,11 +97,10 @@
                                             <a href="{{ route('admin.productos.edit', $producto) }}" class="btn btn-sm btn-light border" title="Editar">
                                                 <i class="fa-solid fa-pen-to-square text-primary"></i>
                                             </a>
-                                            
-                                            <form action="{{ route('admin.productos.destroy', $producto) }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.')">
+                                            <form action="{{ route('admin.productos.destroy', $producto) }}" method="POST" onsubmit="return confirm('¿Eliminar producto?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-light border" title="Eliminar">
+                                                <button class="btn btn-sm btn-light border">
                                                     <i class="fa-solid fa-trash text-danger"></i>
                                                 </button>
                                             </form>
@@ -105,10 +109,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center py-5 text-muted">
-                                        <i class="fa-solid fa-box-open fs-1 mb-3 opacity-25"></i>
-                                        <p class="mb-0">No se encontraron productos en el catálogo.</p>
-                                    </td>
+                                    <td colspan="6" class="text-center py-5 text-muted">No hay productos.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -131,6 +132,5 @@
     .bg-soft-info { background-color: #e0f2fe; color: #0369a1; }
     .table thead th { border-bottom: none; font-size: 0.75rem; letter-spacing: 0.05em; }
     .btn-light:hover { background-color: #f1f5f9; border-color: #cbd5e1; }
-    .shadow-xs { box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
 </style>
 @endsection
