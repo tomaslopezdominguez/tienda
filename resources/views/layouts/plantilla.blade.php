@@ -22,6 +22,20 @@
         .nav-link { font-weight: 500; color: #64748b !important; transition: all 0.2s; }
         .nav-link:hover { color: var(--primary-color) !important; }
         
+        /* Logo Styles */
+        .logo-container {
+            width: 45px;
+            height: 45px;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+        }
+        .logo-img { width: 100%; height: 100%; object-fit: cover; }
+
         /* Admin specific link */
         .nav-admin { color: var(--admin-color) !important; font-weight: 700 !important; }
         .nav-admin:hover { opacity: 0.8; }
@@ -34,8 +48,14 @@
         /* Cart Badge */
         .badge-cart { position: absolute; top: -5px; right: -5px; font-size: 0.7rem; border: 2px solid white; }
 
-        /* Dropdowns */
-        .dropdown-menu { border-radius: 12px; padding: 0.5rem; margin-top: 10px; }
+        /* Dropdowns corregido */
+        .dropdown-menu { 
+            border-radius: 12px; 
+            padding: 0.5rem; 
+            margin-top: 10px; 
+            border: none; 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
+        }
         .dropdown-item { border-radius: 8px; padding: 0.6rem 1rem; font-size: 0.9rem; }
     </style>
     @yield('styles')
@@ -45,7 +65,9 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                    <img src="/img/logo.jpg" width="45" height="45" alt="Logo" class="rounded-circle me-2">
+                    <div class="logo-container me-2">
+                        <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="logo-img">
+                    </div>
                     <span class="fw-bold fs-4 text-dark">Mi<span class="text-primary">Tienda</span></span>
                 </a>
 
@@ -98,8 +120,9 @@
                                     <i class="fa-regular fa-user-circle me-1 fs-5"></i> {{ auth()->user()->name }}
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                                    {{-- Se usa orders.my para evitar el error de ruta no definida --}}
                                     <li><a class="dropdown-item" href="{{ route('orders.my') }}"><i class="fa-solid fa-box me-2 text-muted"></i>Mis Compras</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2 text-muted"></i>Mi Perfil</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('orders.my') }}"><i class="fa-solid fa-user me-2 text-muted"></i>Mi Perfil</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="POST">
